@@ -3,6 +3,8 @@
 import scrapy
 from scrapy import signals
 from multiprocessing.queues import Queue
+import urllib2
+import json
 
 
 class BaseSpider(scrapy.Spider):
@@ -23,3 +25,8 @@ class BaseSpider(scrapy.Spider):
 
     def parse(self, response):
         pass
+
+    @staticmethod
+    def http_get(url):
+        response = urllib2.urlopen(url)  # 调用urllib2向服务器发送get请求
+        return json.loads(response.read())
