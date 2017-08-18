@@ -19,3 +19,13 @@ class DmozPipeline(object):
         # print line
         self.file.write(line.decode("unicode_escape"))
         return item
+
+
+class YouDaoPipeline(object):
+    def __init__(self):
+        from api.models.english import English
+        self.englishModel = English
+
+    def process_item(self, item, spider):
+        self.englishModel.insert_english(item)
+        return item

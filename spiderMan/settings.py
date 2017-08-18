@@ -65,7 +65,8 @@ ROBOTSTXT_OBEY = False
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     # 'spiderMan.pipelines.SpidermanPipeline': 300,
-    'spiderMan.pipelines.DmozPipeline': 300,
+    # 'spiderMan.pipelines.DmozPipeline': 300,
+    'spiderMan.pipelines.YouDaoPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from flask import Flask
-from flask_restful import Resource, Api, marshal_with
+from flask_restful import Resource, Api, marshal_with, abort
 from spiderMan.crawlerWorker import CrawlerWorker
 from spiderMan.spiders import dmozSpider, youdaoSpider
 from models.english import English
+import re
 
 app = Flask(__name__)
 api = Api(app)
@@ -27,8 +28,11 @@ class GetEnglish(Resource):
 
 
 class EnglishSpider(Resource):
-    def get(self):
-        crawler = CrawlerWorker(youdaoSpider.YouDaoSpider)
+    def get(self, word):
+        m = re.match(r'[a-zA-Z]+', word)
+        if not m:
+            abort(404, message="word must be alphabet")
+        crawler = CrawlerWorker(youdaoSpider.YouDaoSpider, word)
         crawler.start()
         items = []
         [items.append(dict(item)) for item in crawler.get_queue()]
@@ -37,7 +41,7 @@ class EnglishSpider(Resource):
 
 api.add_resource(Test, '/test')
 api.add_resource(GetEnglish, '/')
-api.add_resource(EnglishSpider, '/scra')
+api.add_resource(EnglishSpider, '/scra/<string:word>')
 
 if __name__ == '__main__':
     app.run(debug=True)
