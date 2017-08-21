@@ -49,9 +49,12 @@ class English(db.Model):
             one.meaning = english.meaning
             one.sentence = english.sentence
             one.update_time = int(time.time())
+            re_id = one.id
         else:
             db.session.add(english)
+            re_id = english.id
         db.session.commit()
+        return re_id
 
     def __repr__(self):
         return '<English %r>' % self.name

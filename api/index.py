@@ -32,7 +32,9 @@ class EnglishSpider(Resource):
         m = re.match(r'[a-zA-Z]+', word)
         if not m:
             abort(404, message="word must be alphabet")
-        crawler = CrawlerWorker(youdaoSpider.YouDaoSpider, word)
+        spider = youdaoSpider.YouDaoSpider
+        spider.word = word
+        crawler = CrawlerWorker(spider)
         crawler.start()
         items = []
         [items.append(dict(item)) for item in crawler.get_queue()]

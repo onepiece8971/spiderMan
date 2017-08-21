@@ -27,5 +27,10 @@ class YouDaoPipeline(object):
         self.englishModel = English
 
     def process_item(self, item, spider):
-        self.englishModel.insert_english(item)
+        re_id = self.englishModel.insert_english(item)
+        if re_id:
+            print '\033[1;32mSuccess:\033[0m %s' % item['name']
+        else:
+            print '\033[1;31mError:\033[0m %s' % item['name']
+
         return item

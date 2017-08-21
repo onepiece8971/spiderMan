@@ -4,10 +4,10 @@ import multiprocessing
 
 
 class CrawlerWorker(multiprocessing.Process):
-    def __init__(self, spider, word):
+    def __init__(self, spider):
         multiprocessing.Process.__init__(self)
         self.spider = spider
-        self.spider.word = word
+        self.spider.cmd = False
         self.settings = get_project_settings()
 
     def run(self):
